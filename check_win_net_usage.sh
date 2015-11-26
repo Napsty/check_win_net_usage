@@ -13,6 +13,7 @@
 # 20120126      Bugfix in port check
 # 20121010	Bugfix in password handling
 # 20121019	Handling Connection Error (thanks Hermit)
+# 20151126	Verify interface parameter was set
 #############################################################################
 # Set path to the location of your Nagios plugin (check_nt)
 pluginlocation="/usr/local/nagios/libexec"
@@ -61,6 +62,8 @@ then insertport=${port}
 else insertport=12489
 fi
 
+# Verify interface parameter was set
+if [[ -z ${interface} ]]; then echo "UNKNOWN - No interface given"; exit 3; fi
 #############################################################################
 # The checks itself (with password)
 if [[ -n ${password} ]]
