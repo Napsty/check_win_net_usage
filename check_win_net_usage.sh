@@ -7,15 +7,14 @@
 # Unfortunately this is necessary because the Windows perfomance output
 # has two separate entries for Received and Sent Bytes/s.
 #
-# Author:       Claudio Kuenzler www.claudiokuenzler.com
+# Author:     Claudio Kuenzler www.claudiokuenzler.com
 # History:
-# 20111116      First version released
-# 20120126      Bugfix in port check
+# 20111116    First version released
+# 20120126    Bugfix in port check
 # 20121010	Bugfix in password handling
 # 20121019	Handling Connection Error (thanks Hermit)
 # 20151126	Verify interface parameter was set
 # 20151127	Handling connection error on second connection, too
-# 20151127	Fix perfdata output
 #############################################################################
 # Set path to the location of your Nagios plugin (check_nt)
 pluginlocation="/usr/local/nagios/libexec"
@@ -107,5 +106,5 @@ value="Bytes"
 fi
 
 # Output
-echo "Network OK - ${return_bytes_in} ${value} received/sec, ${return_bytes_out} ${value} sent/sec|bytes_in=${bytes_in} bytes_out=${bytes_out}"
+echo "Network OK - ${return_bytes_in} ${value} received/sec, ${return_bytes_out} ${value} sent/sec|bytes_in=${bytes_in};bytes_out=${bytes_out}"
 exit 0
