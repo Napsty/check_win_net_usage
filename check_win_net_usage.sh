@@ -11,10 +11,10 @@
 # History:
 # 20111116    First version released
 # 20120126    Bugfix in port check
-# 20121010	Bugfix in password handling
-# 20121019	Handling Connection Error (thanks Hermit)
-# 20151126	Verify interface parameter was set
-# 20151127	Handling connection error on second connection, too
+# 20121010    Bugfix in password handling
+# 20121019    Handling Connection Error (thanks Hermit)
+# 20151126    Verify interface parameter was set
+# 20151127    Handling connection error on second connection, too
 #############################################################################
 # Set path to the location of your Nagios plugin (check_nt)
 pluginlocation="/usr/local/nagios/libexec"
