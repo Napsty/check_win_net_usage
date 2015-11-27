@@ -20,7 +20,7 @@
 pluginlocation="/usr/local/nagios/libexec"
 #############################################################################
 # Help
-help="check_win_net_usage.sh (c) 2011-2012 Claudio Kuenzler (GPLv2)\n
+help="check_win_net_usage.sh (c) 2011-2015 Claudio Kuenzler (GPLv2)\n
 Usage: ./check_win_net_usage.sh -H host [-p port] [-s password] -i intname
 Requirements: check_nt plugin and NSClient++ installed on target server
 \nOptions:\n-H Hostname of Windows server to check
