@@ -14,6 +14,7 @@
 # 20121010	Bugfix in password handling
 # 20121019	Handling Connection Error (thanks Hermit)
 # 20151126	Verify interface parameter was set
+# 20151127	Handling connection error on second connection, too
 #############################################################################
 # Set path to the location of your Nagios plugin (check_nt)
 pluginlocation="/usr/local/nagios/libexec"
@@ -79,6 +80,10 @@ fi
 # Catch connection error
 if !([  "$bytes_in" -eq "$bytes_in" ]) 2>/dev/null
 then    echo "Network UNKNOWN: $bytes_in"
+        exit 3
+fi
+if !([  "$bytes_out" -eq "$bytes_out" ]) 2>/dev/null
+then    echo "Network UNKNOWN: $bytes_out"
         exit 3
 fi
 
