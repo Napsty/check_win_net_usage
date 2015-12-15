@@ -7,18 +7,19 @@
 # Unfortunately this is necessary because the Windows perfomance output
 # has two separate entries for Received and Sent Bytes/s.
 #
-# Author:     Claudio Kuenzler www.claudiokuenzler.com
+# Author:       Claudio Kuenzler www.claudiokuenzler.com
 # History:
-# 20111116    First version released
-# 20120126    Bugfix in port check
-# 20121010    Bugfix in password handling
-# 20121019    Handling Connection Error (thanks Hermit)
-# 20151126    Verify interface parameter was set
-# 20151127    Handling connection error on second connection, too
-# 20151127    Fix perfdata format
+# 20111116      First version released
+# 20120126      Bugfix in port check
+# 20121010      Bugfix in password handling
+# 20121019      Handling Connection Error (thanks Hermit)
+# 20151126      Verify interface parameter was set
+# 20151127      Handling connection error on second connection, too
+# 20151127      Fix perfdata format
+# 20151215      Add network interface detection (-d parameter))
 #############################################################################
 # Set path to the location of your Nagios plugin (check_nt)
-pluginlocation="/usr/local/nagios/libexec"
+pluginlocation="/usr/lib/nagios/plugins"
 #############################################################################
 # Help
 help="check_win_net_usage.sh (c) 2011-2015 Claudio Kuenzler (GPLv2)\n
@@ -28,7 +29,8 @@ Requirements: check_nt plugin and NSClient++ installed on target server
 -p Listening port of NSClient++ on target server (default 12489)
 -s Password in case NSClient++ is set to use password
 -i Name of network interface to use (not ethX, check Windows performance GUI)
--o Choose output of value in KB, MB (default Byte)"
+-o Choose output of value in KB, MB (default Byte)
+-d Detect network interfaces on target host"
 #############################################################################
 # Check for people who need help - aren't we all nice ;-)
 if [ "${1}" = "--help" -o "${#}" = "0" ];
@@ -44,7 +46,7 @@ echo "CRITICAL - Plugin check_nt not found in ${pluginlocation}"; exit 2
 fi
 #############################################################################
 # Get user-given variables
-while getopts "H:p:s:i:o:" Input;
+while getopts "H:p:s:i:o:d" Input;
 do
        case ${Input} in
        H)      host=${OPTARG};;
@@ -52,6 +54,7 @@ do
        s)      password=${OPTARG};;
        i)      interface=${OPTARG};;
        o)      output=${OPTARG};;
+       d)      detect=1;;
        *)      echo "Wrong option given. Please rtfm or launch --help"
                exit 1
                ;;
@@ -62,6 +65,15 @@ done
 if [[ -n ${port} ]]
 then insertport=${port}
 else insertport=12489
+fi
+
+# If -d (detection) is used, present list of interface names
+if [[ ${detect} -eq 1 ]]; then
+  if [[ -n ${password} ]]; then
+    ${pluginlocation}/check_nt -H ${host} -p ${insertport} -s ${password} -v INSTANCES -l "Network Interface" | sed "s/OK&//"; exit 0
+  else
+    ${pluginlocation}/check_nt -H ${host} -p ${insertport} -v INSTANCES -l "Network Interface" | sed "s/OK&//"; exit 0
+  fi
 fi
 
 # Verify interface parameter was set
