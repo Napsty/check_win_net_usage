@@ -49,7 +49,8 @@ Requirements: check_nt plugin and NSClient++ installed on target server
 -s Password in case NSClient++ is set to use password
 -i Name of network interface to use (not ethX, check Windows performance GUI)
 -o Choose output of value in KB, MB (default Byte)
--d Detect network interfaces on target host"
+-d Detect network interfaces on target host
+-l Set Windows language if different than English, e.g. '-l de'"
 #############################################################################
 # Check for people who need help - aren't we all nice ;-)
 if [ "${1}" = "--help" -o "${#}" = "0" ];
